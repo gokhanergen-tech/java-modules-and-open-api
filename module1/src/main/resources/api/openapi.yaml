@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: Example Application
+  description: "Test"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: ergen5171@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8090
+    description: Development Server
+
+tags:
+  - name: user
+    description: Operations about user
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: Create user functionality
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '201':
+          description: User created successfully
+
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: Update user functionality
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '200':
+          description: User updated successfully
+
+  /users/me:
+    get:
+      tags:
+        - user
+      summary: Get current user
+      description: Returns the currently authenticated user
+      operationId: getCurrentUser
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  /auth/login:
+    post:
+      tags:
+        - user
+      summary: User login
+      description: Authenticates user and returns a token
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Unauthorized - invalid credentials
+
+components:
+  schemas:
+    UserDto:
+      type: object
+      required:
+        - username
+        - firstName
+        - lastName
+      properties:
+        username:
+          type: string
+          minLength: 1
+          example: johndoe
+        firstName:
+          type: string
+          minLength: 1
+          example: John
+        lastName:
+          type: string
+          minLength: 1
+          example: Doe
+
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: johndoe
+        password:
+          type: string
+          format: password
+          example: secret123
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR...
