@@ -50,9 +50,9 @@
 							<templateDirectory>swagger-templates/backend</templateDirectory>
 
 							<configOptions>
-								<delegatePattern>true</delegatePattern>
 								<interfaceOnly>true</interfaceOnly>
 								<skipDefaultInterface>true</skipDefaultInterface>
+								<useSpringBoot3>true</useSpringBoot3>
 							</configOptions>
 
 						</configuration>
